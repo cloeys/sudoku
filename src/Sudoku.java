@@ -238,13 +238,15 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-		String output = "";
+		String output = " ------------\n";
 		int placepipe = 0;
 		int pipesplaced = 0;
-		int placehyphens = 0;
 		
 		for (int i = 1; i <= 9; i++) {
 			for (int j = 1; j <= 9; j++) {
+				if ( j == 1) {
+					output += "|";
+				}
 				output += getCell(i,j).getValue();
 				if (placepipe == 2 && pipesplaced != 2) {
 					output += "|";
@@ -255,11 +257,11 @@ public class Sudoku {
 					placepipe=placepipe+1 % 3;
 					pipesplaced = 0;
 				}
-				if (placehyphens == 16) {
-					output += "\n-----------\n";
-					placehyphens = 0;
-				} else {
-					placehyphens++;
+				if (j == 9) {
+					output += "\n";
+				}
+				if (i % 3 == 0 && j == 9) {
+					output += " ------------\n";
 				}
 			}
 		}
