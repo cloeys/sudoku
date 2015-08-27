@@ -31,7 +31,7 @@ public class Sudoku {
 			}
 		}
 		Random rn = new Random();
-		for (int i = 1; i <= 25; i++) {
+		for (int i = 1; i <= 33; i++) {
 			int randVal = rn.nextInt(9) + 1;
 			int randRow = rn.nextInt(9) + 1;
 			int randCol = rn.nextInt(9) + 1;
