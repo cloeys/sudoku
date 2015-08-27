@@ -29,12 +29,12 @@ public class Main {
 		
 		Sudoku s = new Sudoku();
 		boolean solveable = false;
-		
-		while (!solveable) {
+		while (!solveable) { //brute force to give the user a solveable sudoku
 			s = new Sudoku();
 			solveable = s.solveable();
 		}
-		System.out.println(s);
+		
+		System.out.println(s); //
 
 		
 		

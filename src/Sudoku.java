@@ -41,9 +41,7 @@ public class Sudoku {
 			if (!setCell(randRow, randCol, randVal, true)) {
 				i--;
 			}
-		}
-		
-		
+		}		
 	}
 
 	private Cell getCell(int row, int col) {
@@ -54,7 +52,7 @@ public class Sudoku {
 		getMatrix().setCell(row, col, new Cell(0));
 	}
 	
-	public boolean solveable() throws InterruptedException {
+	public boolean solveable() throws InterruptedException { 
 		Deque<Position> stack = new ArrayDeque<Position>();
 		Sudoku help = new Sudoku(this);
 		int curVal = 1;
@@ -66,7 +64,7 @@ public class Sudoku {
 						help.clearCell(i,j);
 						i = p.getRow();
 						j = p.getCol();
-						System.out.println("Backtracking to " + p);
+						//System.out.println("Backtracking to " + p); //notify when backtracking
 						curVal = help.getCell(i,j).getValue()+1;
 					} else {
 						//throw new IllegalArgumentException("unsolvable");
@@ -75,10 +73,10 @@ public class Sudoku {
 				} else {
 					//Thread.sleep(300); //testing purposes, see the magic happen slowly
 					if (!help.getCell(i, j).getGenerated()) {
-						System.out.println("Trying value " + curVal + " on cell " + new Position(i, j));
+						//System.out.println("Trying value " + curVal + " on cell " + new Position(i, j));
 						if (help.setCell(i, j, curVal, false)) {
 							stack.push(new Position(i, j));
-							System.out.println(help);
+							//System.out.println(help); //check how our sudoku looks like partially solved
 							curVal = 1;
 						} else {
 							curVal++;
@@ -91,10 +89,9 @@ public class Sudoku {
 						}
 					}
 				}
-
 			}
 		}
-		System.out.println(help);
+		//System.out.println(help); //print the solution
 		return true;
 	}
 
@@ -241,7 +238,32 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-		return getMatrix().toString();
+		String output = "";
+		int placepipe = 0;
+		int pipesplaced = 0;
+		int placehyphens = 0;
+		
+		for (int i = 1; i <= 9; i++) {
+			for (int j = 1; j <= 9; j++) {
+				output += getCell(i,j).getValue();
+				if (placepipe == 2 && pipesplaced != 2) {
+					output += "|";
+					placepipe = 0;
+					pipesplaced++;
+				} else {
+					//output += "\n";
+					placepipe=placepipe+1 % 3;
+					pipesplaced = 0;
+				}
+				if (placehyphens == 16) {
+					output += "\n-----------\n";
+					placehyphens = 0;
+				} else {
+					placehyphens++;
+				}
+			}
+		}
+		return output;
 	}
 	
 
