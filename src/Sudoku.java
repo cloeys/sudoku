@@ -47,7 +47,7 @@ public class Sudoku {
 		}		
 	}
 
-	private Cell getCell(int row, int col) {
+	public Cell getCell(int row, int col) {
 		return getMatrix().getCell(row, col);
 	}
 
@@ -94,6 +94,7 @@ public class Sudoku {
 				}
 			}
 		}
+		//System.out.println("Solved");
 		//System.out.println(help); //print the solution
 		return true;
 	}
@@ -101,6 +102,7 @@ public class Sudoku {
 	public Matrix getMatrix() {
 		return this.matrix;
 	}
+	
 
 	public boolean setCell(int row, int col, int value, boolean generated) {
 		boolean res = false;
@@ -241,7 +243,7 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-		String output = " -----------------------\n";
+		String output = "Puzzle: \n -----------------------\n";
 		int placepipe = 0;
 		int pipesplaced = 0;
 		
@@ -268,6 +270,7 @@ public class Sudoku {
 				}
 			}
 		}
+		
 		return output;
 	}
 	

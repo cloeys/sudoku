@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class Main {
 		
 		System.out.println(s); //
 
+		SudokuGUI gui = new SudokuGUI(s);
 		
+		gui.setVisible(true);
 		
 	}
 
