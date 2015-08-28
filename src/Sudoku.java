@@ -7,6 +7,9 @@ import java.util.Random;
 public class Sudoku {
 
 	private Matrix matrix;
+	private final int DIFF_LEVEL = 33;  //number of revealed tiles which "indicate" difficulty (not really but well...)
+										//increase for easier sudokus, but slower generation
+										//33 is considered newspaper level (= medium)
 
 	public Sudoku(Sudoku s) {
 		this.matrix = new Matrix(9,9);
@@ -31,7 +34,7 @@ public class Sudoku {
 			}
 		}
 		Random rn = new Random();
-		for (int i = 1; i <= 33; i++) {
+		for (int i = 1; i <= DIFF_LEVEL; i++) {
 			int randVal = rn.nextInt(9) + 1;
 			int randRow = rn.nextInt(9) + 1;
 			int randCol = rn.nextInt(9) + 1;
@@ -238,7 +241,7 @@ public class Sudoku {
 
 	@Override
 	public String toString() {
-		String output = " ------------\n";
+		String output = " -----------------------\n";
 		int placepipe = 0;
 		int pipesplaced = 0;
 		
@@ -247,9 +250,9 @@ public class Sudoku {
 				if ( j == 1) {
 					output += "|";
 				}
-				output += getCell(i,j).getValue();
+				output += " " + getCell(i,j).getValue();
 				if (placepipe == 2 && pipesplaced != 2) {
-					output += "|";
+					output += " |";
 					placepipe = 0;
 					pipesplaced++;
 				} else {
@@ -261,7 +264,7 @@ public class Sudoku {
 					output += "\n";
 				}
 				if (i % 3 == 0 && j == 9) {
-					output += " ------------\n";
+					output += " -----------------------\n";
 				}
 			}
 		}
