@@ -10,7 +10,8 @@ public class Sudoku {
 	private final int DIFF_LEVEL = 33;  //number of revealed tiles which "indicate" difficulty (not really but well...)
 										//increase for easier sudokus, but slower generation
 										//33 is considered newspaper level (= medium)
-
+	private int filledIn = 0;
+	
 	public Sudoku(Sudoku s) {
 		this.matrix = new Matrix(9,9);
 		for (int i = 1; i <= 9; i++) {
@@ -18,6 +19,7 @@ public class Sudoku {
 				this.matrix.setCell(i, j, s.getCell(i, j));
 			}
 		}
+		filledIn = s.filledIn;
 	}
 	
 	public Sudoku() {
@@ -46,6 +48,18 @@ public class Sudoku {
 			}
 		}		
 	}
+	
+	private void incFilledIn() {
+		filledIn++;
+	}
+	
+	private void decFilledIn() {
+		filledIn--;
+	}
+	
+	public int getFilledIn() {
+		return filledIn;
+	}
 
 	public Cell getCell(int row, int col) {
 		return getMatrix().getCell(row, col);
@@ -53,6 +67,7 @@ public class Sudoku {
 
 	private void clearCell(int row, int col) {
 		getMatrix().setCell(row, col, new Cell(0));
+		decFilledIn();
 	}
 	
 	public boolean solveable() throws InterruptedException { 
@@ -94,13 +109,29 @@ public class Sudoku {
 				}
 			}
 		}
-		//System.out.println("Solved");
+		System.out.println(help.isSolved());
 		//System.out.println(help); //print the solution
 		return true;
 	}
 
 	public Matrix getMatrix() {
 		return this.matrix;
+	}
+	
+	public boolean isSolved() {
+		boolean solved = false;
+		for (int i = 1; i <= 9; i++) {
+			for (int j = 1; j <= 9; j++) {
+				if (getCell(i,j).getValue() == 0) {
+					break;
+				}
+				if (getCell(i,j).getValue() != 0 && i == 9 && j == 9) {
+					solved = true;
+				}
+			}
+		}
+		
+		return solved;
 	}
 	
 
@@ -110,6 +141,7 @@ public class Sudoku {
 			if (!getMatrix().getCell(row, col).getGenerated()) {
 				if (isValidInput(row, col, value)) {
 					getMatrix().setCell(row, col, new Cell(value, generated));
+					incFilledIn();
 					res = true;
 				}
 			}

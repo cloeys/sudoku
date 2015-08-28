@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -23,8 +24,9 @@ public class SudokuGUI extends JFrame {
 	public SudokuGUI(Sudoku s) {
 		super("Sudoku");
 		this.s = s;
-		this.setResizable(false);
-		this.setMinimumSize(new Dimension(400, 400));
+		setResizable(false);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(400, 400));
 		for (int x = 0; x <= 8; x++) {
 			for (int y = 0; y <= 8; y++) {
 				f[x][y] = new JTextField(1);
@@ -33,6 +35,8 @@ public class SudokuGUI extends JFrame {
 					f[x][y].setText("");
 				} else {
 					f[x][y].setText(Integer.toString(s.getCell(y + 1, x + 1).getValue()));
+					f[x][y].setEditable(false);
+					f[x][y].setFont(new Font("Arial", Font.BOLD, 12));
 				}
 				AbstractDocument d = (AbstractDocument) f[x][y].getDocument();
 				d.setDocumentFilter(new DocumentFilter() {
@@ -48,11 +52,6 @@ public class SudokuGUI extends JFrame {
 						}
 					}
 				});
-				
-				if (s.getCell(y + 1, x + 1).getGenerated()) {
-					f[x][y].setEditable(false);
-					f[x][y].setFont(new Font("Arial", Font.BOLD, 12));
-				}
 			}
 		}
 
