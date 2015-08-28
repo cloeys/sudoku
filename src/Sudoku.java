@@ -35,6 +35,7 @@ public class Sudoku {
 				curCol++;
 			}
 		}
+		///hhhh
 		Random rn = new Random();
 		for (int i = 1; i <= DIFF_LEVEL; i++) {
 			int randVal = rn.nextInt(9) + 1;
